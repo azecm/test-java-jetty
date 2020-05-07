@@ -1,0 +1,5 @@
+# dependencies
+/.gradle
+/.idea
+/build
+/gradle

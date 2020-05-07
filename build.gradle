@@ -1,0 +1,86 @@
+plugins {
+    id 'java'
+}
+
+group 'group'
+version '1.0'
+
+sourceCompatibility = 1.8
+compileJava.options.encoding = 'UTF-8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    //https://mvnrepository.com/artifact/com.google.code.gson/gson
+    compile "com.google.code.gson:gson:2.8.6"
+    //https://mvnrepository.com/artifact/org.jetbrains/annotations
+    compile "org.jetbrains:annotations:18.0.0"
+    //https://mvnrepository.com/artifact/org.jsoup/jsoup
+    compile "org.jsoup:jsoup:1.12.1"
+    //https://mvnrepository.com/artifact/net.sourceforge.cssparser/cssparser
+    compile "net.sourceforge.cssparser:cssparser:0.9.27"
+    //https://mvnrepository.com/artifact/org.postgresql/postgresql
+    compile "org.postgresql:postgresql:42.2.9"
+    // https://mvnrepository.com/artifact/org.elasticsearch.client/transport
+    compile group: 'org.elasticsearch.client', name: 'transport', version: '7.6.2'
+    //https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+    compile "org.apache.commons:commons-lang3:3.9"
+    //https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload
+    compile "commons-fileupload:commons-fileupload:1.4"
+    //https://mvnrepository.com/artifact/redis.clients/jedis
+    compile "redis.clients:jedis:3.2.0"
+    //https://mvnrepository.com/artifact/org.twitter4j/twitter4j-core
+    compile "org.twitter4j:twitter4j-core:4.0.7"
+    //https://mvnrepository.com/artifact/com.sun.mail/javax.mail
+    compile "com.sun.mail:javax.mail:1.6.2"
+    //https://mvnrepository.com/artifact/com.twelvemonkeys.imageio/imageio-jpeg
+    //https://github.com/haraldk/TwelveMonkeys
+    //https://haraldk.github.io/TwelveMonkeys/
+    compile "com.twelvemonkeys.imageio:imageio-jpeg:3.4.3"
+
+    //compile group: 'org.apache.james', name: 'apache-james-mailbox-maildir', version: '3.1.0'
+    //compile group: 'org.apache.james', name: 'apache-mime4j-core', version: '0.8.2'
+    //compile group: 'tech.blueglacier', name: 'email-mime-parser', version: '1.0.0'
+
+    // https://mvnrepository.com/artifact/net.coobird/thumbnailator
+    // https://github.com/coobird/thumbnailator
+    //https://mvnrepository.com/artifact/net.coobird/thumbnailator
+    compile "net.coobird:thumbnailator:0.4.8"
+
+    //https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-server
+    //https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-servlet
+    //https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-util
+    compile "org.eclipse.jetty:jetty-server:9.4.26.v20200117"
+    compile "org.eclipse.jetty:jetty-servlet:9.4.26.v20200117"
+    compile "org.eclipse.jetty:jetty-util:9.4.26.v20200117"
+
+
+    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.12.1'
+    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j-impl
+    testCompile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.13.1'
+
+}
+
+jar {
+    manifest {
+        attributes(
+                "Main-Class": "org.site.Main",
+                "Class-Path": configurations.compile.collect { "libs/" + it.getName() }.join(' ')
+        )
+    }
+}
+
+
+
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+task copyRuntimeLibs(type: Copy) {
+    into "build/libs/libs"
+    from configurations.runtime
+}
